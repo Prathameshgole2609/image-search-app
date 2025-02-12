@@ -1,7 +1,6 @@
 <?php
 function view(string $filename, array $data = []): void
 {
-    // create variables from the associative array
     foreach ($data as $key => $value) {
         $$key = $value;
     }
@@ -44,7 +43,6 @@ function redirect_with_message(string $url, string $message, string $type=FLASH_
 {
     flash('flash_' . uniqid(), $message, $type);
     redirect_to($url);
-
 }
 
 function session_flash(...$keys): array

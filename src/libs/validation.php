@@ -1,7 +1,8 @@
 <?php
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
-$pdo = require __DIR__ . '/../../config/connect.php';
-// var_dump($pdo);
 const DEFAULT_VALIDATION_ERRORS = [
     'required' => 'Please enter the %s',
     'email' => 'The %s is not a valid email address',
@@ -18,13 +19,9 @@ const DEFAULT_VALIDATION_ERRORS = [
 
 function validate(array $data, array $fields, array $messages = []): array
 {
-    // Split the array by a separator, trim each element
-    // and return the array
     $split = fn($str, $separator) => array_map('trim', explode($separator, $str));
 
-    // get the message rules
     $rule_messages = array_filter($messages, fn($message) => is_string($message));
-    // overwrite the default message
     $validation_errors = array_merge(DEFAULT_VALIDATION_ERRORS, $rule_messages);
 
     $errors = [];
@@ -34,23 +31,18 @@ function validate(array $data, array $fields, array $messages = []): array
         $rules = $split($option, '|');
 
         foreach ($rules as $rule) {
-            // get rule name params
             $params = [];
-            // if the rule has parameters e.g., min: 1
             if (strpos($rule, ':')) {
                 [$rule_name, $param_str] = $split($rule, ':');
                 $params = $split($param_str, ',');
             } else {
                 $rule_name = trim($rule);
             }
-            // by convention, the callback should be is_<rule> e.g.,is_required
             $fn = 'is_' . $rule_name;
 
             if (is_callable($fn)) {
                 $pass = $fn($data, $field, ...$params);
                 if (!$pass) {
-                    // get the error message for a specific field and rule if exists
-                    // otherwise get the error message from the $validation_errors
                     $errors[$field] = sprintf(
                         $messages[$field][$rule_name] ?? $validation_errors[$rule_name],
                         $field,
@@ -87,7 +79,7 @@ function is_min(array $data, string $field, int $min): bool
         return true;
     }
 
-    return mb_strlen($data[$field]) >= $min;
+    return strlen($data[$field]) >= $min;
 }
 
 
@@ -97,7 +89,7 @@ function is_max(array $data, string $field, int $max): bool
         return true;
     }
 
-    return mb_strlen($data[$field]) <= $max;
+    return strlen($data[$field]) <= $max;
 }
 
 
@@ -107,22 +99,14 @@ function is_between(array $data, string $field, int $min, int $max): bool
         return true;
     }
 
-    $len = mb_strlen($data[$field]);
+    $len = strlen($data[$field]);
     return $len >= $min && $len <= $max;
 }
 
 
 function is_same(array $data, string $field, string $other): bool
 {
-    if (isset($data[$field], $data[$other])) {
-        return $data[$field] === $data[$other];
-    }
-
-    if (!isset($data[$field]) && !isset($data[$other])) {
-        return true;
-    }
-
-    return false;
+    return isset($data[$field], $data[$other]) && $data[$field] === $data[$other];
 }
 
 
@@ -147,29 +131,6 @@ function is_secure(array $data, string $field): bool
 }
 
 
-// /**
-//  * Connect to the database and returns an instance of PDO class
-//  * or false if the connection fails
-//  *
-//  * @return PDO
-//  */
-// function db(): PDO
-// {
-//     static $pdo;
-//     // if the connection is not initialized
-//     // connect to the database
-//     if (!$pdo) {
-//         $pdo = new PDO(
-//             sprintf("mysql:host=%s;dbname=%s;charset=UTF8", DB_HOST, DB_NAME),
-//             DB_USER,
-//             DB_PASSWORD,
-//             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-//         );
-//     }
-//     return $pdo;
-// }
-
-
 
 function is_unique(array $data, string $field, string $table, string $column): bool
 {
@@ -179,7 +140,7 @@ function is_unique(array $data, string $field, string $table, string $column): b
 
     $sql = "SELECT $column FROM $table WHERE $column = :value";
 
-    $stmt = $pdo->prepare($sql);
+    $stmt = db()->prepare($sql);
     $stmt->bindValue(":value", $data[$field]);
 
     $stmt->execute();
