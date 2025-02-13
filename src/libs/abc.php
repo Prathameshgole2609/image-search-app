@@ -17,4 +17,4 @@ $fields = [
 echo "<pre>";
 print_r($inputs);
 print_r($errors);
-echo "<pre>";
+echo "❌ ⚠️ 📜";

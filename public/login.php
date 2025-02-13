@@ -4,7 +4,7 @@ require __DIR__ . '/../src/bootstrap.php';
 require __DIR__ . '/../src/login.php';
 ?>
 
-<?php view('header', ['title' => 'Login']) ?>
+<?php view('header', ['title' => 'Login', 'href' => '../src/inc/style.css']) ?>
 
 <?php if (isset($errors['login'])) : ?>
     <div class="alert alert-error">
