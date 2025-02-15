@@ -39,10 +39,10 @@ require __DIR__ . '/../src/register.php';
         <small><?= $errors['password2'] ?? '' ?></small>
     </div>
 
-    <button type="submit">Register</button>
-
-    <footer>Already a member? <a href="login.php">Login here</a></footer>
-
+    <div>
+        <button type="submit" class="form-btn">Register</button>
+        <footer>Already a member? <a href="login.php">Login here</a></footer>
+    </div>
 </form>
 
 <?php view('footer') ?>

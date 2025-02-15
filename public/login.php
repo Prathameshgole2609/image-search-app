@@ -1,5 +1,4 @@
 <?php
-
 require __DIR__ . '/../src/bootstrap.php';
 require __DIR__ . '/../src/login.php';
 ?>
@@ -24,10 +23,10 @@ require __DIR__ . '/../src/login.php';
             <input type="password" name="password" id="password">
             <small><?= $errors['password'] ?? '' ?></small>
         </div>
-        <section>
-            <button type="submit">Login</button>
-            <a href="register.php">Register</a>
-        </section>
+        <div>
+            <button type="submit" class="form-btn">Login</button>
+            <footer>Don't have an account? <a href="register.php">Register Here</a></footer>
+        </div>
     </form>
 
 <?php view('footer') ?>

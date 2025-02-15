@@ -5,7 +5,7 @@ require __DIR__ . '/../src/bootstrap.php';
 $access_token_insta = "EACERUwWjFC0BOyndWoZAZAtLcUw6NYTFNMZAecMYQwJUzBmrVcDCRLqRfwoj1tGZAzQZBehfhZCbvwWd6iku8cXisrjsVF6KXbl2n6ZC2ljTM1R1S2jKn46gwC7qxQhyUAUGBMZBBZCjZAZBv3R6R88TpBLILPRrVLRiorLbNJDGk5YRAJosDo0MHPcnrD2";
 $access_token_unsplash = "dCyE89I_yNPCcEeyRLzpPDjEMCPloS0APYDjvbOEeKU";
 $access_token_pexel = "sG8Vx1BxLDaTWAKRn9nEnB9etqpwHvOGlVEYjyKemfi9DBE8vg6YwilA";
-$access_token_openverse = "sSDjBXiwT2DmsflPlB7UJfyV13SKcn";
+$access_token_openverse = "NS553eFC7d0a6pCx2SgXhZ74Ip5NOV";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hashtag'])) {
     $hashtag = trim($_POST['hashtag']);

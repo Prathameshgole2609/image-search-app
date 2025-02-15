@@ -6,15 +6,14 @@ require_login();
 
 <?php view('header', ['title' => 'Dashboard', 'href' => '../src/inc/style.css']) ?>
 
-<p>Welcome <?= current_user() ?> <a href="logout.php">Logout</a></p>
-<div>
-    <h2>🔍 Search Images by Hashtag</h2>
 
-    <div>
-        <input type="text" id="hashtag" class="" placeholder="Enter hashtag">
-        <button id="search-btn" class="">Search</button>
+<div class="cnt">
+   <div class="cnt1">
+    <!-- <p class="search-head">🔍 Search Images by Hashtag</p> -->
+    <div class="cnt2">
+        <input type="text" id="hashtag" placeholder="Enter hashtag" class="search-input">
+        <button id="search-btn" class="search-btn">Search</button>
     </div>
-
     <?php
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
@@ -23,17 +22,17 @@ require_login();
         $history = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($history) {
-            echo "<h3 class=''>Your Recent Searches:</h3><ul>";
+            echo "<h3>Your Recent Searches:</h3><ul>";
             foreach ($history as $search) {
-                echo "<li>{$search['hashtag']} <a href='../src/delete_history.php?id={$search['id']}' class=''>Delete</a></li>";
+                echo "<li>{$search['hashtag']} <a href='../src/delete_history.php?id={$search['id']}'>Delete</a></li>";
             }
             echo "</ul>";
         }
     }
     ?>
-
+   </div>
+     
     <div id="results" class="results"></div>
- 
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -51,7 +50,7 @@ $(document).ready(function() {
             type: "POST",
             data: { hashtag: hashtag },
             beforeSend: function() {
-                $("#results").html("<p>⏳ Fetching images...</p>");
+                $("#results").html("<p class='loading'>⏳Fetching images...</p>");
             },
             success: function(response) {
                 let images = JSON.parse(response);
@@ -59,7 +58,7 @@ $(document).ready(function() {
                     let output = "";
                     images.forEach(img => {
                         output += `<div>
-                            <img class="lazy-load abc" data-src="${img.media_url}" height="400px" width="400px">
+                            <img class="lazy-load abc" data-src="${img.media_url}" height="250px" width="auto">
                             <p>${img.source}</p>
                         </div>`;
                     });
