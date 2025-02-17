@@ -14,6 +14,7 @@ require_login();
         <input type="text" id="hashtag" placeholder="Enter hashtag" class="search-input">
         <button id="search-btn" class="search-btn">Search</button>
     </div>
+
     <?php
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
@@ -22,9 +23,9 @@ require_login();
         $history = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($history) {
-            echo "<h3>Your Recent Searches:</h3><ul>";
+            echo "<h3>Your Recent Searches:</h3><ul class='list'>";
             foreach ($history as $search) {
-                echo "<li>{$search['hashtag']} <a href='../src/delete_history.php?id={$search['id']}'>Delete</a></li>";
+                echo "<li class='list-item'><p class='li-text'>{$search['hashtag']}</p> <a href='../src/delete_history.php?id={$search['id']}' class='delete'><i class='fa fa-close' style='font-size:14px'></i></a></li>";
             }
             echo "</ul>";
         }
@@ -38,6 +39,10 @@ require_login();
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
+    $(".li-text").click(function() {
+        $("#hashtag").val($(this).text());
+    });
+
     $("#search-btn").click(function() {
         let hashtag = $("#hashtag").val().trim();
         if (hashtag === "") {
@@ -57,8 +62,8 @@ $(document).ready(function() {
                 if (images.length > 0) {
                     let output = "";
                     images.forEach(img => {
-                        output += `<div>
-                            <img class="lazy-load abc" data-src="${img.media_url}" height="250px" width="auto">
+                        output += `<div class='item'>
+                            <img class="lazy-load" data-src="${img.media_url}">
                             <p>${img.source}</p>
                         </div>`;
                     });
@@ -90,6 +95,7 @@ $(document).ready(function() {
         lazyImages.forEach(img => observer.observe(img));
     }
 });
+
 </script>
 
 

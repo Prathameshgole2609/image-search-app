@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    font-family: Arial, sans-serif;
 }
 html{
     margin: 0px;
@@ -17,6 +18,7 @@ body{
     position: fixed;
     top: 0px;
     width: 100%;
+    color: white;
 }
 .head-cnt{
     width: 90%;
@@ -66,7 +68,7 @@ body{
 .head-btn{
     height: 40px;
     width: 126px;
-    background-color: #5879ff;
+    background-color: rgba(255, 228, 146, 1);
     border-radius: 8px;
     border: none;
     font-weight: 500;
@@ -78,7 +80,7 @@ body{
     letter-spacing: -0.02em;
 }
 .head-btn:hover{
-    background-color: #274eea;
+    background-color: rgb(203, 162, 36) ;
 }
 .main-cnt{
     padding-top: 80px;
@@ -97,9 +99,9 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     row-gap: 15px;
-    text-align: center;
+    /* text-align: center; */
 }
 .search-head{
     font-weight: bold;
@@ -108,7 +110,7 @@ body{
 .cnt2{
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     column-gap: 10px;
 }
 .search-input{
@@ -121,7 +123,7 @@ body{
 .search-btn{
     height: 40px;
     width: 126px;
-    background-color: rgba(255, 228, 146, 1);
+    background-color: #5879ff ;
     border-radius: 4px;
     border: none;
     font-weight: 500;
@@ -131,23 +133,65 @@ body{
     justify-content: center;
     align-items: center;
     letter-spacing: -0.02em;
+    color: white;
 }
 .search-btn:hover{
-    background-color: rgb(203, 162, 36);
+    background-color: #274eea;
 }
+
 .results{
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
     box-sizing: border-box;
-    margin-top: 20px;
-    row-gap: 40px;
-    justify-content: space-between;
+    margin-top: 20px; 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-flow: dense;
+    gap: 10px;
 }
+.item{
+    height: fit-content;
+    overflow: hidden;
+}
+.item > img{
+    /* width: 100%; */
+    width: auto;
+    height: 230px;
+    display: block;
+    /* object-fit: contain; */
+    object-fit: cover;
+    /* border-radius: 5px; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 8px 15px;
+}  
+
 .loading{
   width: 100%;
   text-align: center;
 }
+
+.list{
+list-style: none;
+display: flex;
+column-gap: 18px;
+}
+.list-item{
+ color: blue;
+ position: relative;
+}
+.delete{
+display: none;
+color: red;
+position: absolute;
+top: -53%;
+right: -25%;
+}
+.li-text:hover ~ .delete{
+display: block;
+}
+.delete:hover{
+display: block; 
+}
+
+
 /* Login */
 form{
  display: flex;
