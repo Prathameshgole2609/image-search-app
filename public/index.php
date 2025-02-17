@@ -9,7 +9,6 @@ require_login();
 
 <div class="cnt">
    <div class="cnt1">
-    <!-- <p class="search-head">🔍 Search Images by Hashtag</p> -->
     <div class="cnt2">
         <input type="text" id="hashtag" placeholder="Enter hashtag" class="search-input">
         <button id="search-btn" class="search-btn">Search</button>
